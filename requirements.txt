@@ -1,0 +1,28 @@
+# Core dependencies
+gymnasium>=0.29.0
+numpy>=1.21.0
+pillow>=8.0.0
+
+# Deep learning - flexible TensorFlow versions
+tensorflow>=2.10.0; sys_platform != "darwin"  # Non-macOS
+tensorflow-macos>=2.10.0; sys_platform == "darwin"  # macOS
+tensorflow-metal>=1.0.0; sys_platform == "darwin"  # Apple Silicon GPU
+
+# Alternative: if TensorFlow still fails, try these
+# tensorflow-cpu>=2.10.0  # CPU-only version
+# tensorflow-gpu>=2.10.0  # GPU version (Linux)
+
+# Browser automation
+selenium>=4.0.0
+
+# Data processing and visualization
+matplotlib>=3.5.0
+scikit-learn>=1.0.0
+imageio>=2.15.0
+
+# Development and debugging
+ipdb>=0.13.0
+
+# Optional: Jupyter for interactive development
+# jupyter>=1.0.0
+# ipywidgets>=7.0.0 

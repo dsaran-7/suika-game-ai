@@ -21,7 +21,7 @@ class SuikaBrowserEnv(gymnasium.Env):
             script_dir = os.path.dirname(os.path.realpath(__file__))
             # Construct the absolute path of the suika-game directory
             suika_game_dir = os.path.join(script_dir, 'suika-game')
-            self.server = subprocess.Popen(["python", "-m", "http.server", str(port)], cwd=suika_game_dir, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+            self.server = subprocess.Popen(["python3", "-m", "http.server", str(port)], cwd=suika_game_dir, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
         opts = webdriver.ChromeOptions()
         opts.add_argument("--width=1024")
@@ -70,7 +70,13 @@ class SuikaBrowserEnv(gymnasium.Env):
         arr = np.asarray(img)
         # imageio.imwrite('cropped.png', arr)
         # import ipdb; ipdb.set_trace()
-        imgResized = img.resize((self.img_width,self.img_height), Image.ANTIALIAS) 
+        # Use modern Pillow API - ANTIALIAS was deprecated
+        try:
+            # For newer Pillow versions (>=9.0.0)
+            imgResized = img.resize((self.img_width, self.img_height), Image.Resampling.LANCZOS)
+        except AttributeError:
+            # Fallback for older Pillow versions
+            imgResized = img.resize((self.img_width, self.img_height), Image.ANTIALIAS) 
         arr = np.asarray(imgResized)
         return arr
 
